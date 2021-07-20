@@ -1,0 +1,120 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100vw;
+    height: 100vh;
+}
+
+li {
+    list-style: none;
+    margin-top: 10px;
+}
+
+.container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: start;
+}
+
+.task-manager {
+    width: 30vw;
+    height: 90%;
+    position: relative;
+    top: 20px;
+    border-radius: 10px;
+    background: lightgray;
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    font-family: Helvetica;
+    }
+
+.input-task-area {
+    width: 85%;
+    height: 150px;
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    border: solid 1px whitesmoke;
+}
+
+.add-task-area {
+    display: flex;
+    flex-flow: row;
+    align-items: baseline;
+    justify-items: flex-start;
+}
+
+input[type=text] {
+    width: 250px;
+    border: none;
+    border-bottom: 2px solid dimgray;
+    padding-bottom: 6px;
+    background: lightgray;
+}
+
+button {
+    background-color: dimgray;
+    width: 95px;
+    border: none;
+    color: white;
+    padding: 8px 16px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    margin-left: 5px;
+}
+
+.list-task-area {
+    width: 85%;
+    height: 100%;
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    border: solid 1px whitesmoke;
+}
+
+.task-list {
+    display: flex;
+    width: 85%;
+    height: 100%;
+    flex-flow: column-reverse;
+    justify-content: flex-end;
+    border: solid 1px red;
+}
+.task-element {
+    display: flex;
+    flex-flow: row;
+    flex-wrap: wrap;
+    width: 100%;
+    border: solid 1px yellow;
+ }
+
+/*.label {
+    width: 250px;
+    border: none;
+    border-bottom: 2px solid dimgray;
+    padding-bottom: 6px;
+}*/
+
+.task {
+    font-family: Helvetica;
+    width: 250px;
+    border: none;
+    /*border-bottom: 2px solid dimgray;*/
+    padding-bottom: 6px;
+    color: red;
+    }
+
+.task-label {
+    width: 250px;
+    border: none;
+    /*border-bottom: 2px solid dimgray;*/
+    padding-bottom: 6px;
+   }
+
+.task-done {
+    text-decoration: line-through;
+}

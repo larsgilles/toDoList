@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link href="main.css" rel="stylesheet">
+    <title>To-Do List</title>
+</head>
+<body>
+<div class="container">
+    <div class="task-manager">
+        <div class="input-task-area">
+            <div>
+                <h1>To-Do-List</h1>
+            </div>
+            <div class="add-task-area">
+                <input id="input-task" type="text" placeholder="Add your task here">
+                <button id="add-task-button" class="button">add task</button>
+            </div>
+        </div>
+        <div class="list-task-area">
+            <ul id="task-list" class="task-list">
+            </ul>
+        </div>
+    </div>
+</div>
+<script>
+
+    let addTaskButton = document.getElementById("add-task-button");
+    let taskListElements = document.getElementById("task-list");
+    let newTask = document.getElementById("input-task");
+
+    let taskList = [];
+
+    window.addEventListener('load', (event) => {
+        getTaskListFromLocalStorage();
+        showTasks(taskList);
+    });
+
+    addTaskButton.addEventListener('click', () => {
+        getTaskListFromLocalStorage();
+        addNewTaskToTaskList(newTask.value);
+        showTasks(taskList);
+    });
+
+    taskListElements.addEventListener('click', (event) => {
+        let id = event.target.parentElement.getAttribute('data-key');
+        if (event.target.type === 'checkbox') {
+            // toggle the state
+
+            markTaskComplete(id);
+        }
+
+        if (event.target.classList.contains('delete-btn')) {
+            deleteTask(id);
+        }
+
+    })
+
+    function addNewTaskToTaskList(input) {
+        if (input !== '') {
+
+            //neuer task wird als object erstellt
+            const toDo = {
+                id: Date.now(),
+                task: input,
+                taskCompleted: false
+            }
+
+            //input Feld für neuen Task wird geleert
+            newTask.value = '';
+
+            taskList.push(toDo);
+            addTaskListToLocalStorage(taskList);
+        }
+    }
+
+    function markTaskComplete(id) {
+        taskList.forEach(function (task) {
+            // use == not ===, because here types are different. One is number and other is string
+            if (task.id == id) {
+                // toggle the value
+                task.taskCompleted = !task.taskCompleted
+            }
+        });
+
+        addTaskListToLocalStorage(taskList);
+    }
+
+    function deleteTask(id) {
+        taskList = taskList.filter(task => task.id != id);
+        addTaskListToLocalStorage(taskList);
+    }
+
+    function addTaskListToLocalStorage(taskList) {
+        localStorage.setItem('tasks', JSON.stringify(taskList));
+        showTasks(taskList);
+    }
+
+    function getTaskListFromLocalStorage() {
+        taskList = JSON.parse(localStorage.getItem('tasks')) || [];
+        showTasks(taskList);
+    }
+
+    function showTasks(taskList) {
+
+        taskListElements.innerHTML = '';
+        taskList.forEach(task => {
+
+            let checkBoxToDo = document.createElement('input');
+            checkBoxToDo.setAttribute('type', 'checkbox');
+            checkBoxToDo.setAttribute('class', 'checkBox');
+            checkBoxToDo.checked = task.taskCompleted;
+
+            let taskToDo = document.createElement('span');
+            taskToDo.setAttribute('class', 'task');
+            taskToDo.textContent = task.task;
+            if (checkBoxToDo.checked) {
+                taskToDo.classList.add('task-done');
+            } else {
+                taskToDo.classList.remove('task-done');
+            }
+
+            let btnDeleteToDo = document.createElement('button');
+            btnDeleteToDo.setAttribute('class', 'delete-btn');
+            btnDeleteToDo.textContent = 'delete';
+
+            let taskElement = document.createElement('li');
+            taskElement.setAttribute('class', 'task-element');
+            taskElement.setAttribute('data-key', task.id);
+
+            taskListElements.appendChild(taskElement);
+            taskElement.appendChild(checkBoxToDo);
+            taskElement.appendChild(taskToDo);
+            taskElement.appendChild(btnDeleteToDo);
+        })
+    }
+
+</script>
+</body>
+</html>
